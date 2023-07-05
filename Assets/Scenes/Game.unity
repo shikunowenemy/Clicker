@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.49951404, g: 0.8552037, b: 0.8260599, a: 1}
+  m_IndirectSpecularColor: {r: 0.49946493, g: 0.85383177, b: 0.8281325, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4691,7 +4691,6 @@ MonoBehaviour:
   levelPrefab: {fileID: 937954909372988109, guid: 3da6147e2ee665542a22804b8860e081,
     type: 3}
   levelContainer: {fileID: 1901974312}
-  levelsCount: 5
 --- !u!114 &1107368723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4734,6 +4733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevelText: {fileID: 1292084834}
   progressLevelText: {fileID: 704208828}
+  totalEnemies: 10
 --- !u!1 &1158801458
 GameObject:
   m_ObjectHideFlags: 0
@@ -6297,7 +6297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: 0.000061035156}
+  m_AnchoredPosition: {x: 480, y: 0}
   m_SizeDelta: {x: 960, y: 200}
   m_Pivot: {x: 0.5, y: 1.0000001}
 --- !u!114 &1808889639

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +7,37 @@ public class LevelProgress : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI currentLevelText;
     [SerializeField] private TextMeshProUGUI progressLevelText;
+    [SerializeField] private int totalEnemies;
 
+    private int _killedEnemies;
+
+    public int KilledEnemies
+    {
+        get => _killedEnemies;
+        set
+        {
+            _killedEnemies = value;
+            progressLevelText.text = $"{_killedEnemies}/{totalEnemies}";
+            if (_killedEnemies == totalEnemies)
+            {
+                LevelLoader.instance.CompleteLevel();
+            }
+        } 
+    }
+
+    public void LoadProgress()
+    {
+        if (LevelLoader.instance.CurrentLevel == LevelLoader.instance.CompletedLevels)
+        {
+            _killedEnemies = PlayerPrefs.GetInt("killedEnemies", 0);
+        }
+        else
+        {
+            _killedEnemies = totalEnemies;
+        }
+        progressLevelText.text = $"{_killedEnemies}/{totalEnemies}";
+        currentLevelText.text = $"Lvl {LevelLoader.instance.CurrentLevel + 1}";
+    }
     private void Singleton()
     {
         if (instance == null)
@@ -25,15 +53,5 @@ public class LevelProgress : MonoBehaviour
     private void Awake()
     {
         Singleton();
-    }
-
-    public void UpdateLevel(int currentLevel)
-    {
-        currentLevelText.text = $"Lvl {currentLevel+1}";
-    }
-
-    public void UpdateProgress(int killedEnemies, int totalEnemies)
-    {
-        progressLevelText.text = $"{killedEnemies/totalEnemies}";
     }
 }

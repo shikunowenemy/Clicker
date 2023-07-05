@@ -5,19 +5,17 @@ public class Level : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelNumberText;
     [SerializeField] private GameObject activeLevelMarker;
-    [SerializeField] private int amountEnemies;
-
-    private int _levelNumber;
+    
+    private int _number;
     private bool _isCurrent;
-    private int _killedEnemies = 0;
 
-    public int LevelNumber
+    public int Number
     {
-        get => _levelNumber;
+        get => _number;
         set
         {
-            _levelNumber = value;
-            levelNumberText.text = (_levelNumber + 1).ToString();
+            _number = value;
+            levelNumberText.text = (_number + 1).ToString();
         }
     }
 
@@ -28,19 +26,10 @@ public class Level : MonoBehaviour
         {
             _isCurrent = value;
             activeLevelMarker.SetActive(value);
-            if (_isCurrent)
+            if (value)
             {
-                LevelLoader.instance.CurrentLevel = _levelNumber;
+                LevelLoader.instance.LoadLevel(Number);
             }
-        }
-    }
-
-    public int KilledEnemies
-    {
-        get => _killedEnemies;
-        set
-        {
-            _killedEnemies = value;
         }
     }
 }

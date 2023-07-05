@@ -37,8 +37,4 @@ public class EnemySpawn : MonoBehaviour
     {
         Singleton();
     }
-    private void Start()
-    {
-        Spawn();
-    }
 }

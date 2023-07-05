@@ -7,11 +7,10 @@ public class LevelLoader : MonoBehaviour
 
     [SerializeField] private GameObject levelPrefab;
     [SerializeField] private RectTransform levelContainer;
-    [SerializeField] private int levelsCount;
-
     private List<Level> _levels = new();
     private int _completedLevels;
     private int _currentLevel;
+    private bool _isFirstLoad;
 
     public int CompletedLevels
     {
@@ -22,16 +21,6 @@ public class LevelLoader : MonoBehaviour
     public int CurrentLevel
     {
         get => _currentLevel;
-        set
-        {
-            if (_currentLevel != value)
-            {
-                _levels[_currentLevel].IsCurrent = false;
-                _currentLevel = value;
-                LevelProgress.instance.UpdateLevel(_currentLevel);
-                EnemySpawn.instance.Spawn();
-            }
-        }
     }
 
     private void Singleton()
@@ -48,12 +37,32 @@ public class LevelLoader : MonoBehaviour
 
     private void AddLevels()
     {
-        for (int i = 0; i < levelsCount; i++)
+        _completedLevels = PlayerPrefs.GetInt("completedLevels", 0);
+        for (int i = 0; i <= _completedLevels; i++)
         {
             Level newLevel = Instantiate(levelPrefab, levelContainer).GetComponent<Level>();
-            newLevel.LevelNumber = i;
+            newLevel.Number = i;
             _levels.Add(newLevel);
         }
+    }
+
+    public void CompleteLevel()
+    {
+        _completedLevels++;
+        Level newLevel = Instantiate(levelPrefab, levelContainer).GetComponent<Level>();
+        newLevel.Number = _completedLevels;
+        _levels.Add(newLevel);
+    }
+
+    public void LoadLevel(int levelNumber)
+    {
+        if (_currentLevel != levelNumber)
+        {
+            _levels[_currentLevel].IsCurrent = false;
+        }
+        _currentLevel = levelNumber;
+        LevelProgress.instance.LoadProgress();
+        EnemySpawn.instance.Spawn();
     }
 
     private void Awake()
@@ -64,7 +73,6 @@ public class LevelLoader : MonoBehaviour
 
     private void Start()
     {
-        _levels[PlayerPrefs.GetInt("currentLevel", 0)].IsCurrent = true;
-        LevelProgress.instance.UpdateLevel(_currentLevel);
+        _levels[_completedLevels].IsCurrent = true;
     }
 }

@@ -19,11 +19,16 @@ public class Enemy : MonoBehaviour
     {
         EconomicSystem.instance.TotalMoney += _reward;
         Destroy(gameObject);
+        if (LevelLoader.instance.CurrentLevel == LevelLoader.instance.CompletedLevels)
+        {
+            LevelProgress.instance.KilledEnemies++;
+        }
     }
 
-    private void UpdateHealth()
+    private void UpdateHealthUI()
     {
         healthText.text = $"{_health} HP";
+        healthBar.value = _health * 100 / _maxHealth;
     }
 
     public void SetParameters()
@@ -34,17 +39,15 @@ public class Enemy : MonoBehaviour
         _health = 10 * _level;
         _maxHealth = _health;
         _reward = _level * 2;
-
         nameAndLevelText.text = $"{_name}, Lvl {_level}";
-        UpdateHealth();
+        UpdateHealthUI();
     }
 
     public void GetClickDamage()
     {
         _health -= DamageSystem.instance.ClickDamage;
         animator.Play("Get Damage");
-        healthBar.value = _health * 100 / _maxHealth;
-        UpdateHealth();
+        UpdateHealthUI();
         if (_health <= 0)
         {
             Die();
