@@ -5,7 +5,7 @@ public class Level : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelNumberText;
     [SerializeField] private GameObject activeLevelMarker;
-    
+
     private int _number;
     private bool _isCurrent;
 

@@ -10,7 +10,6 @@ public class LevelLoader : MonoBehaviour
     private List<Level> _levels = new();
     private int _completedLevels;
     private int _currentLevel;
-    private bool _isFirstLoad;
 
     public int CompletedLevels
     {
@@ -62,7 +61,7 @@ public class LevelLoader : MonoBehaviour
         }
         _currentLevel = levelNumber;
         LevelProgress.instance.LoadProgress();
-        EnemySpawn.instance.Spawn();
+        EnemySpawner.instance.Spawn();
     }
 
     private void Awake()
@@ -74,5 +73,10 @@ public class LevelLoader : MonoBehaviour
     private void Start()
     {
         _levels[_completedLevels].IsCurrent = true;
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("completedLevels", _completedLevels);
     }
 }

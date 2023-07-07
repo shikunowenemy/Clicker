@@ -4,6 +4,7 @@ using UnityEngine;
 public class EconomicSystem : MonoBehaviour
 {
     public static EconomicSystem instance;
+    [SerializeField] ResourceSpawner resourceSpawner;
     [SerializeField] private TextMeshProUGUI totalMoneyText;
     private int _totalMoney;
 
@@ -14,6 +15,7 @@ public class EconomicSystem : MonoBehaviour
         {
             _totalMoney = value;
             UpdateUI();
+            resourceSpawner.SpawnNext(_totalMoney);
         }
     }
 
@@ -41,7 +43,12 @@ public class EconomicSystem : MonoBehaviour
 
     private void Start()
     {
-        _totalMoney = 0;
+        _totalMoney = PlayerPrefs.GetInt("totalMoney", 0);
         UpdateUI();
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("totalMoney", _totalMoney);
     }
 }

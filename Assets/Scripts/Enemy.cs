@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        EconomicSystem.instance.TotalMoney += _reward;
         Destroy(gameObject);
         if (LevelLoader.instance.CurrentLevel == LevelLoader.instance.CompletedLevels)
         {
@@ -46,12 +45,13 @@ public class Enemy : MonoBehaviour
     public void GetClickDamage()
     {
         _health -= DamageSystem.instance.ClickDamage;
+        EconomicSystem.instance.TotalMoney += _reward;
         animator.Play("Get Damage");
         UpdateHealthUI();
         if (_health <= 0)
         {
             Die();
-            EnemySpawn.instance.Spawn();
+            EnemySpawner.instance.Spawn();
         }
     }
 }

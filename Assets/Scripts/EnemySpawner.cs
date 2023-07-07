@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawn : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
-    public static EnemySpawn instance;
+    public static EnemySpawner instance;
 
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private RectTransform enemyContainer;

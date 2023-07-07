@@ -22,7 +22,7 @@ public class LevelProgress : MonoBehaviour
             {
                 LevelLoader.instance.CompleteLevel();
             }
-        } 
+        }
     }
 
     public void LoadProgress()
@@ -53,5 +53,14 @@ public class LevelProgress : MonoBehaviour
     private void Awake()
     {
         Singleton();
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (_killedEnemies >= totalEnemies)
+        {
+            _killedEnemies = 0;
+        }
+        PlayerPrefs.SetInt("killedEnemies", _killedEnemies);
     }
 }
